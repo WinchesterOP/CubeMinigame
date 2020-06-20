@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PlayerCollision : MonoBehaviour
 {
@@ -12,6 +10,7 @@ public class PlayerCollision : MonoBehaviour
             Debug.Log("Player hit an obstacle");
 
             playerMovement.enabled = false;
+            FindObjectOfType<GameMasterMind>().EndGame();
         }
     }
 }
