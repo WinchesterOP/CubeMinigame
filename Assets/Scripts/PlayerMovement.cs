@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Player wurde erstellt");
 
         // Der Parameter von Rigidbody von Gravity wird auf "true" gesetzt
-        rb.useGravity = true;
+        rb.useGravity = false;
     }
 
     // Update is called once per frame
@@ -41,8 +42,17 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKey("a"))
         {
             rb.AddForce(-sidewaysForce * Time.deltaTime,0,0,ForceMode.VelocityChange);
-        } 
-        if (rb.position.y < -1f)
+        }
+        // In Level 2 sind auch auf und abwärtsbewegungen möglich weswegen die Extra Bedingungen vorhanden sind
+        if (Input.GetKey("w") && (SceneManager.GetActiveScene().buildIndex == 2))
+        {
+            rb.AddForce(0, sidewaysForce * Time.deltaTime, 0, ForceMode.VelocityChange);
+        }
+        if (Input.GetKey("s") && (SceneManager.GetActiveScene().buildIndex == 2))
+        {
+            rb.AddForce(0, -sidewaysForce * Time.deltaTime, 0, ForceMode.VelocityChange);
+        }
+        if (rb.position.y < -1f && (SceneManager.GetActiveScene().buildIndex != 2))
         {
             FindObjectOfType<GameMasterMind>().EndGame();
         }
