@@ -9,15 +9,18 @@ public class ScoreNumber : MonoBehaviour
     public Text textScore;
 
     private float playerStartPosition;
+    private float actualScore;
 
     private void Start()
     {
-        playerStartPosition = player.position.z;   
+        playerStartPosition = player.position.z;
+        // Bei der initierung wird der Score auf den letzten gespeicherten Wert gesetzt
+        actualScore = PlayerPrefs.GetInt("ActualScore");
     }
 
     // Update is called once per frame
     void Update()
     {
-        textScore.text = (player.position.z - playerStartPosition).ToString("0");
+        textScore.text = (player.position.z - playerStartPosition + actualScore).ToString("0") ;
     }
 }
