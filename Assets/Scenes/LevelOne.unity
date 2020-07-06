@@ -3487,6 +3487,7 @@ MonoBehaviour:
   rb: {fileID: 1744634350}
   forwardForce: 2000
   sidewaysForce: 100
+  distanceGroundPlayerGravityActivate: 500
 --- !u!114 &1744634356
 MonoBehaviour:
   m_ObjectHideFlags: 0

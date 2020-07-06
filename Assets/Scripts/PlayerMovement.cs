@@ -13,7 +13,13 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("Player wurde erstellt");
 
         // Der Parameter von Rigidbody von Gravity wird auf "true" gesetzt
-        rb.useGravity = false;
+        if(SceneManager.GetActiveScene().buildIndex == 2)
+        {
+            rb.useGravity = false;
+        } else 
+        {
+            rb.useGravity = true;
+        }
     }
 
     // Update is called once per frame
@@ -52,9 +58,11 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(0, -sidewaysForce * Time.deltaTime, 0, ForceMode.VelocityChange);
         }
+        //beim Fallen unter die 0Z-Position wird das Spiel beendet
         if (rb.position.y < -1f && (SceneManager.GetActiveScene().buildIndex != 2))
         {
             FindObjectOfType<GameMasterMind>().EndGame();
         }
+
     }
 }
