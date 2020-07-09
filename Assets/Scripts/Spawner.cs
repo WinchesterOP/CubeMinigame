@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Spawner : MonoBehaviour
 {
@@ -9,39 +7,24 @@ public class Spawner : MonoBehaviour
     public GameObject obstacle;
     public Transform[] spawnpoints;
 
-    public float spawnpointOffsetToPlayer = 50f; // Abstand zu den entstehenden Obstacles
-    public float timeBetweenSpawns = 1f; // Abstand zwischen den einzelnen Spawns
+    public float spawnpointOffsetToPlayer = 50f; // distance to the player
+    public float timeBetweenSpawns = 1f;
+    public int maxObstaclesInLevel = 15; // old obstacles will be destroyed in-game
 
-    private float timeToSpawn = 2f; // Initial Wert wann der erste Spawn stattfinden soll
+    private List<GameObject> allObstacles = new List<GameObject>();
+
+    private float timeToSpawn = 2f; // temp time counter
     
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-
-        // Der Spawner bleibt immer auf der Position des Players stehen
-        transform.position = player.transform.position;
-
-        foreach(Transform spawnpoint in spawnpoints)
-        {
-            // die Position änder sich nur auf der y-Achse damit die Spawnpoints nachgeschoben werden
-            spawnpoint.position =  new Vector3(spawnpoint.position.x 
-                                                , spawnpoint.position.y 
-                                                , transform.position.z + spawnpointOffsetToPlayer);
-        }
+        SetSpawnerPosition();
+        CheckIfObstacleDestroy();
 
         if (Time.time >= timeToSpawn)
         {
             SpawnObstacles();
             timeToSpawn = Time.time + timeBetweenSpawns;
-        }
-        
+        }    
     }
 
     private void SpawnObstacles()
@@ -52,8 +35,33 @@ public class Spawner : MonoBehaviour
         {
             if (randomIndex != i)
             {
-                Instantiate(obstacle, spawnpoints[i].position, Quaternion.identity);
+                // new GameObject will directly added to the list
+                allObstacles.Add((GameObject)Instantiate(obstacle, spawnpoints[i].position, Quaternion.identity));
             }
+        }
+    }
+
+    private void CheckIfObstacleDestroy() 
+    {
+        if (allObstacles.Count > maxObstaclesInLevel)
+        {
+            Destroy(allObstacles[0]);
+            allObstacles.RemoveAt(0); // the destroy will make the 0 position NULL so we have to remove it
+        }
+    }
+
+    private void SetSpawnerPosition()
+    {
+        transform.position = player.transform.position; // set spawner position to player position
+
+        foreach (Transform spawnpoint in spawnpoints)
+        {
+            // pushes the spawnpoints in front of the player
+            spawnpoint.position = new Vector3(
+                  spawnpoint.position.x
+                , spawnpoint.position.y
+                , transform.position.z + spawnpointOffsetToPlayer
+                );
         }
     }
 }
