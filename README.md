@@ -1,2 +1,2 @@
 # FirstUnity
-Erste Versuche ein Spiel mit Unity zu erstellen
+My first programming experience with Unity
