@@ -7,29 +7,30 @@ public class Spawner : MonoBehaviour
     public GameObject obstacle;
     public Transform[] spawnpoints;
 
-    public float spawnpointOffsetToPlayer = 50f; // distance to the player
+    public float spawnpointOffsetToPlayer = 200f; // distance to the player
     public float timeBetweenSpawns = 1f;
-    public int maxObstaclesInLevel = 15; // old obstacles will be destroyed in-game
+    public float distanceBetweenSpawns = 40f;
+    public int maxObstaclesInLevel = 25; // old obstacles will be destroyed in-game
 
     private List<GameObject> allObstacles = new List<GameObject>();
 
-    private float timeToSpawn = 2f; // temp time counter
+    private float lastDistanceOfObstacle = 160f; // temp counter for distance to obstacle and startpoint of first spawn
     
     void Update()
     {
         SetSpawnerPosition();
         CheckIfObstacleDestroy();
 
-        if (Time.time >= timeToSpawn)
+        if (spawnpoints[1].position.z >= lastDistanceOfObstacle)
         {
             SpawnObstacles();
-            timeToSpawn = Time.time + timeBetweenSpawns;
+            lastDistanceOfObstacle += distanceBetweenSpawns;
         }    
     }
 
     private void SpawnObstacles()
     {
-        int randomIndex = Random.Range(0, 2);
+        int randomIndex = Random.Range(0, 3);
 
         for (int i = 0; i < spawnpoints.Length; i++)
         {

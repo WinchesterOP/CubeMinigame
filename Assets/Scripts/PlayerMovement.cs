@@ -61,7 +61,7 @@ public class PlayerMovement : MonoBehaviour
         //beim Fallen unter die 0Z-Position wird das Spiel beendet
         if (rb.position.y < -1f && (SceneManager.GetActiveScene().buildIndex != 2))
         {
-            FindObjectOfType<GameMasterMind>().EndGame();
+            FindObjectOfType<GameMasterMind>().CompleteLevel();
         }
 
     }
