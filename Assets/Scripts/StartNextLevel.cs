@@ -5,7 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class StartNextLevel : MonoBehaviour
 {
+
+    public void LoadMainMenue()
+    {
+        SceneManager.LoadScene("StartMenue", LoadSceneMode.Single);
+    }
+
     public void LoadNextLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);    }
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);    
+    }
+
+    
 }

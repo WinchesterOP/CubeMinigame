@@ -17,9 +17,20 @@ public class StartMenue : MonoBehaviour
             
     }
 
-    public void StartGame()
+    public void StartLevel1()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        SceneManager.LoadScene("LevelOne", LoadSceneMode.Single);
+    }
+
+    public void StartLevel2()
+    {
+        SceneManager.LoadScene("LevelTwo", LoadSceneMode.Single);
+    }
+
+    public void Quit()
+    {
+        Debug.Log("Game has ended");
+        Application.Quit();
     }
 
     public void GetToHighscoreScene()
